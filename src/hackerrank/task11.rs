@@ -1,63 +1,30 @@
-fn gen_random_vector(_n: usize) -> Vec<i32> {
-    // Імітація рандомного вектора (20 чисел від 10 до 99)
-    vec![42, 88, 15, 67, 23, 90, 11, 39, 55, 21, 62, 44, 28, 36, 95, 19, 49, 33, 70, 12]
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int roundGrade(int grade) {
+if (grade < 38) return grade;
+
+int nextMultipleOf5 = ((grade / 5) + 1) * 5;
+if (nextMultipleOf5 - grade < 3)
+return nextMultipleOf5;
+else
+return grade;
 }
 
-fn min_adjacent_sum(data: &[i32]) -> (usize, usize, i32) {
-    let mut min_sum = i32::MAX;
-    let mut min_index = 0;
+int main() {
+int n;
+cin >> n;
+vector<int> grades(n);
 
-    for i in 0..data.len() - 1 {
-        let sum = data[i] + data[i + 1];
-        if sum < min_sum {
-            min_sum = sum;
-            min_index = i;
-        }
-    }
-
-    (min_index, min_index + 1, min_sum)
+for (int i = 0; i < n; ++i) {
+cin >> grades[i];
 }
 
-fn print_vector_with_min_sum(data: &[i32]) {
-    println!(
-        "indexes: {}",
-        (0..data.len())
-            .map(|i| format!("{:>3}", i))
-            .collect::<Vec<_>>()
-            .join(".")
-    );
-
-    println!(
-        "data:    [{}]",
-        data.iter()
-            .map(|v| format!("{:>2}", v))
-            .collect::<Vec<_>>()
-            .join(", ")
-    );
-
-    let (i, j, sum) = min_adjacent_sum(data);
-
-    let arrows = (0..data.len())
-        .map(|idx| {
-            if idx == i {
-                " \\__".to_string()
-            } else if idx == j {
-                "__/ ".to_string()
-            } else {
-                "    ".to_string()
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("");
-
-    println!("indexes:{}", arrows);
-    println!(
-        "min adjacent sum={}+{}={} at indexes:{},{}",
-        data[i], data[j], sum, i, j
-    );
+for (int i = 0; i < n; ++i) {
+cout << roundGrade(grades[i]) << endl;
 }
 
-fn main() {
-    let vec = gen_random_vector(20);
-    print_vector_with_min_sum(&vec);
+return 0;
 }
